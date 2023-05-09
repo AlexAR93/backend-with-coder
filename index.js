@@ -1,15 +1,28 @@
 
+const productsValidation=(array,arrayContainer,autoId)=>{
+    if(((array.title&&array.description&&array.price&&array.stock&&array.thumbnail!=undefined)||(array.title&&array.description&&array.price&&array.stock&&array.thumbnail!=null))&&((array.title.length>1&&array.description.length>1&&array.thumbnail.length>1)==true)){
+        arrayContainer.push(array)
+        return array.id=autoId+1
+        }else{
+            alert(`producto numero ${autoId} incompleto, revisa que esten los campos completos`)
+            return autoId
+        }
+}
+
+
+
 class Contenedor {
     constructor() {
-        this.produdcts=[]
-
+        this.produdcts=[];
+        this.autoId=0;
     }
 
     save(newArray){
-        return this.produdcts.push(newArray)
+        this.autoId=productsValidation(newArray,this.produdcts,this.autoId)
     }
     getById(id){
-        return this.produdcts.find(p=>p.id==id)
+        let productSearch=this.produdcts.find(p=>p.id==id)
+        return productSearch!=undefined?productSearch:(console.log('Not found'),alert('Este id no pertenece a ningun producto'))
     }
     getAll(){
         return this.produdcts
@@ -30,7 +43,6 @@ const produdctsContainer=new Contenedor()
 
 
 const newArray={
-    id:1,
     title:'Mouse',
     price:3500,
     description:'Este es un producto muy bueno',
@@ -38,7 +50,6 @@ const newArray={
     thumbnail:'https://...'
 };
 const newArray1={
-    id:2,
     title:'Teclado',
     price:5500,
     description:'Este es un producto muy bueno',
@@ -46,7 +57,6 @@ const newArray1={
     thumbnail:'https://...'
 };
 const newArray2={
-    id:3,
     title:'Monitor',
     price:55500,
     description:'Este es un producto muy bueno',
@@ -54,7 +64,6 @@ const newArray2={
     thumbnail:'https://...'
 };
 const newArray4={
-    id:4,
     title:'Grafica',
     price:135500,
     description:'Este es un producto muy bueno',
@@ -69,15 +78,8 @@ produdctsContainer.save(newArray1)
 
 produdctsContainer.save(newArray2)
 
-produdctsContainer.deleteById(2);
-console.log(produdctsContainer)
-produdctsContainer.save(newArray4)
-console.log(produdctsContainer)
-produdctsContainer.deleteAll()
-console.log(produdctsContainer)
-produdctsContainer.save(newArray)
 
-produdctsContainer.save(newArray1)
 
-produdctsContainer.save(newArray2)
-console.log(produdctsContainer)
+
+
+console.log(produdctsContainer,produdctsContainer.getById(1))
