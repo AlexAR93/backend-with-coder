@@ -9,8 +9,6 @@ const productsValidation=(array,arrayContainer,autoId)=>{
         }
 }
 
-
-
 class Contenedor {
     constructor() {
         this.produdcts=[];
@@ -30,12 +28,26 @@ class Contenedor {
     deleteById(id){
         // Elimina el objeto con el id buscado
         let index=this.produdcts.findIndex(p=>p.id==id)
-        this.produdcts.splice(index,1)
+        index!=-1?this.produdcts.splice(index,1):alert('Producto no encontrado para eliminar')
     }
     deleteAll(){
         // Elimina todos los objetos presente
         return this.produdcts.splice(0)
     }
+    updateProduct(id,title,price,description,stock,thumbnail){
+        // Actualiza determinado producto
+        let index=this.produdcts.findIndex(p=>p.id==id)
+        console.log(index)
+        return index!=-1?(this.produdcts[index]={
+            ...this.produdcts[index],
+            title:title,
+            price:price,
+            description:description,
+            stock:stock,
+            thumbnail:thumbnail
+        }):alert('Producto no encontrado')
+    }
+    
   }
 
 const produdctsContainer=new Contenedor()
@@ -80,6 +92,4 @@ produdctsContainer.save(newArray2)
 
 
 
-
-
-console.log(produdctsContainer,produdctsContainer.getById(1))
+console.log(produdctsContainer)
